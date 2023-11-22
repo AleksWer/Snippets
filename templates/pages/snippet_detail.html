@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Begin page content -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1>{{ pagename }}</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {% if type == "view" %}
+                <fieldset disabled>
+                    <div class="row disabled">
+                        <div class="col col-8">
+                            Название: <input type="text" value="{{ snippet.name }}" class="form-control">
+                        </div>
+                        <div class="col col-4">
+                            Дата создания:<input type="text" value="{{ snippet.creation_date }}" class="form-control">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
+                                <p>
+                                    {{ snippet.code }}
+                                </p>                 
+                            </div>                 
+                        </div>
+                    </div>
+                 </fieldset>                
+                {% elif type == 'edit' %} 
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col col-8">
+                            Название: <input name="name" type="text" value="{{ snippet.name }}" class="form-control">
+                        </div>
+                        <div class="col col-4">
+                            Дата создания:<input name="creation_date" type="text" value="{{ snippet.creation_date }}" class="form-control">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
+                                <textarea name="code">
+                                    {{ snippet.code }}
+                                </textarea>               
+                            </div>                
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
+                                <input type="checkbox" name="public" value="True"
+                                {% if snippet.public %} checked {% endif %}> Публичный
+           
+                            </div>                
+                        </div>
+                    </div>
+
+                    <button type="submit"> Обновить </button>
+                </form>    
+                {% endif%}
+            </div>    
+        </div>
+    </div>
+
+{% endblock %}

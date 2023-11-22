@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Begin page content -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1>{{ pagename }}</h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <p>На данной страницы будут отображаться все созданные сниппеты.</p>
+                <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Дата создания</th>
+                        <th scope="col">Пользователь</th>
+                        <th scope="col">Публичный</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for snippet in snippets %}  
+                    <tr>
+                        <td scope="row">{{ snippet.id }}</td>
+                        <td><a href="{% url 'snippet-detail' snippet.id %}">{{ snippet.name }}</a>
+                            {% if request.user == snippet.user %}
+                            <a href="{% url 'snippet-delete' snippet.id %}">
+                            <i style="color:red" class="fa-solid fa-trash"></i></a>
+                            <a href="{% url 'snippet-edit' snippet.id %}">
+                                <i style="color:red" class="fa-solid fa-pen-to-square"></i></a>
+                            {% endif %}
+                        </td>
+                        <td>{{ snippet.creation_date }}</td>
+                        <td>{{ snippet.user.username }}</td>
+                        {% if snippet.public %}
+                            <td>Публичный</td>
+                        {% else %}
+                            <td>Приватный</td>
+                        {% endif %}
+                    </tr>
+
+                    {% endfor %}  
+                    </tbody>
+                </table>
+                <div align="right">
+                    <i style="color: gray;">Всего сниппетов: {{ count }} </i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
