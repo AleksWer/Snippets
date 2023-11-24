@@ -19,6 +19,7 @@ class Snippet(models.Model):
     creation_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
     public = models.BooleanField(default=True)  # Если значение True -> публичный; если False -> приватный
+    example = models.FileField(upload_to='examples/%Y/%m/%d/', default='None', blank=True, null=True, verbose_name='Пример кода')
 
     def __repr__(self):
         return f'Snippet({self.id}, {self.name}, {self.lang}, {self.user}, {self.public})'
